@@ -47,7 +47,7 @@ def _send_notification(subscription, payload, ttl):
         return req
     except WebPushException as e:
         # If the subscription is expired, delete it.
-        if e.response.status_code == 410:
+        if e.response.status_code == 410 or e.response.status_code == 403:
             subscription.delete()
         else:
             # Its other type of exception!
